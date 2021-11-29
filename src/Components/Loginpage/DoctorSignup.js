@@ -1,13 +1,71 @@
 import React from 'react'
-
 import { Card } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
+import { useState,useEffect } from "react";
+import { collection, addDoc } from "firebase/firestore"; 
 import { Button, Col, Row } from 'react-bootstrap';
-
 import Signup from '../Loginpage/doctor-signup.png';
-
-
+import {db} from './firebase';
 function DoctorSignup() {
+
+  /* const ref=firebase.firestore().collection("DoctorRequests");
+    console.log(ref);
+    const saveAnswer=(event)=>{
+        event.preventDefault();
+        const elementsArray=[...event.target.elementsArray];
+        console.log(elementsArray);
+        const formdata=elementsArray.reduce((accumulator,currentValue)=>{
+            if(currentValue.id){
+                accumulator[currentValue.id]=currentValue.value;
+            }
+            return accumulator;
+        },{});
+        console.log({formdata});
+       db.collection("DoctorRequests").add("hello");
+    }; */
+    const [name,setName]=useState("");
+    const [degree,setDegree]=useState("");
+    const [spl,setSpl]=useState("");
+    const [reg,setReg]=useState("");
+    const [years,setYears]=useState("");
+    const [email,setEmail]=useState("");
+    const [pwd,setPwd]=useState("");
+    const handleSubmit=(e)=>{
+        e.preventDefault();
+        addDoc(collection(db, "DoctorRequests"),{
+            name:name,
+            degree:degree,
+            spl:spl,
+            reg:reg,
+            years:years,
+            email:email,
+            pwd:pwd
+        })
+        // db.collection("DoctorRequests").add({
+        //     name:name,
+        //     degree:degree,
+        //     spl:spl,
+        //     reg:reg,
+        //     years:years,
+        //     email:email,
+        //     pwd:pwd
+
+        // })
+        .then(()=>{
+            alert("Request submitted successfully");
+        })
+        .catch(error=>{
+            alert(error.message);
+        });
+        setName("");
+        setPwd("");
+        setEmail("");
+        setReg("");
+        setSpl("");
+        setYears("");
+        setDegree("");
+
+    };
     return (
         <div>
             
@@ -22,67 +80,81 @@ function DoctorSignup() {
             <Card.Title style={{ textAlign: "center" }}>Doctor Signup</Card.Title>
             <hr />
             <div>
-                <Form.Floating className="mb-3">
+                <Form.Floating className="mb-3"  >
                 <Form.Control
                     id="floatingInputCustom"
                     type="text"
                     placeholder="Name"
+                    value={name}
+                    onChange={(e)=>setName(e.target.value)}
                 />
                 <label htmlFor="floatingInputCustom">Name</label>
                 </Form.Floating>
 
-                <Form.Floating className="mb-3">
+                <Form.Floating className="mb-3" >
                 <Form.Control
                     id="floatingInputCustom"
                     type="text"
                     placeholder="Degree"
+                    value={degree}
+                    onChange={(e)=>setDegree(e.target.value)}
                 />
                 <label htmlFor="floatingInputCustom">Degree</label>
                 </Form.Floating>
 
 
-                <Form.Floating className="mb-3">
+                <Form.Floating className="mb-3" >
                 <Form.Control
                     id="floatingInputCustom"
                     type="text"
                     placeholder="Specialization"
+                    value={spl}
+                    onChange={(e)=>setSpl(e.target.value)}
                 />
                 <label htmlFor="floatingInputCustom">Specialization</label>
                 </Form.Floating>
 
-                <Form.Floating className="mb-3">
+                <Form.Floating className="mb-3" >
                 <Form.Control
                     id="floatingInputCustom"
                     type="text"
                     placeholder="reg no"
+                    value={reg}
+                    onChange={(e)=>setReg(e.target.value)}
                 />
                 <label htmlFor="floatingInputCustom">Registration number </label>
                 </Form.Floating>
 
 
-                <Form.Floating className="mb-3">
+                <Form.Floating className="mb-3" >
                 <Form.Control
                     id="floatingInputCustom"
                     type="text"
                     placeholder="years of experience"
+                    value={years}
+                    onChange={(e)=>setYears(e.target.value)}
                 />
                 <label htmlFor="floatingInputCustom">Years of experience</label>
                 </Form.Floating>
 
-                <Form.Floating className="mb-3">
+                <Form.Floating className="mb-3" >
                 <Form.Control
                     id="floatingInputCustom"
                     type="email"
                     placeholder="xys@gmail.com"
+                    value={email}
+                    onChange={(e)=>setEmail(e.target.value)}
                 />
                 <label htmlFor="floatingInputCustom">Email</label>
                 </Form.Floating>
 
-                <Form.Floating>
+                <Form.Floating >
                 <Form.Control
                     id="floatingPasswordCustom"
                     type="password"
                     placeholder="Password"
+                    value={pwd}
+                    onChange={(e)=>setPwd(e.target.value)}
                 />
                 <label htmlFor="floatingPasswordCustom">Password</label>
 
@@ -90,7 +162,7 @@ function DoctorSignup() {
 
                 <Row className="justify-content-md-center" >
                     
-                    <Button variant="primary" type="submit" style={{width:"8em",marginBottom:10}}>
+                    <Button variant="primary" type="submit" style={{width:"8em",marginBottom:10}}onClick={handleSubmit}>
                     Signup
                     </Button>
                     
