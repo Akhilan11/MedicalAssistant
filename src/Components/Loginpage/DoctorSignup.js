@@ -2,27 +2,12 @@ import React from 'react'
 import { Card } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
 import { useState,useEffect } from "react";
-import { collection, addDoc } from "firebase/firestore"; 
+import { collection, addDoc, setDoc, doc } from "firebase/firestore"; 
 import { Button, Col, Row } from 'react-bootstrap';
 import Signup from '../Loginpage/doctor-signup.png';
 import {db} from './firebase';
 function DoctorSignup() {
 
-  /* const ref=firebase.firestore().collection("DoctorRequests");
-    console.log(ref);
-    const saveAnswer=(event)=>{
-        event.preventDefault();
-        const elementsArray=[...event.target.elementsArray];
-        console.log(elementsArray);
-        const formdata=elementsArray.reduce((accumulator,currentValue)=>{
-            if(currentValue.id){
-                accumulator[currentValue.id]=currentValue.value;
-            }
-            return accumulator;
-        },{});
-        console.log({formdata});
-       db.collection("DoctorRequests").add("hello");
-    }; */
     const [name,setName]=useState("");
     const [degree,setDegree]=useState("");
     const [spl,setSpl]=useState("");
@@ -32,25 +17,18 @@ function DoctorSignup() {
     const [pwd,setPwd]=useState("");
     const handleSubmit=(e)=>{
         e.preventDefault();
-        addDoc(collection(db, "DoctorRequests"),{
+
+        // const coll = collection(db, "DoctorRequests") 
+        setDoc(doc(db, "DoctorRequests", email),{
             name:name,
             degree:degree,
             spl:spl,
             reg:reg,
             years:years,
             email:email,
-            pwd:pwd
+            pwd:pwd,
         })
-        // db.collection("DoctorRequests").add({
-        //     name:name,
-        //     degree:degree,
-        //     spl:spl,
-        //     reg:reg,
-        //     years:years,
-        //     email:email,
-        //     pwd:pwd
 
-        // })
         .then(()=>{
             alert("Request submitted successfully");
         })

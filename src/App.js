@@ -4,6 +4,7 @@ import PatientSignup from './Components/Loginpage/PatientSignup';
 import PatientLogin from './Components/Loginpage/PatientLogin';
 import DoctorLogin from './Components/Loginpage/DoctorLogin';
 import DoctorSignup from './Components/Loginpage/DoctorSignup';
+import PatientPage from './Components/Mainpage/PatientPage';
 
 import {BrowserRouter,Routes,Route} from "react-router-dom";
 
@@ -19,6 +20,8 @@ function App() {
           <Route path="patient-login" element={<PatientLogin />} />
           <Route path="doctor-login" element={<DoctorLogin />} />
           <Route path="doctor-signup" element={<DoctorSignup />} />
+          <Route path="patient-landing" element={<PatientPage />} />
+          
           {/* <Route path="expenses" element={<Expenses />} />
         <Route path="invoices" element={<Invoices />} /> */}
         </Routes>

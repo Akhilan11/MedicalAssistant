@@ -32,7 +32,7 @@ function PatientLogin() {
     }
 
     if (re == 1)
-        return <Navigate to="/" />
+        return <Navigate to="/patient-landing" />
     else
 
         return (
