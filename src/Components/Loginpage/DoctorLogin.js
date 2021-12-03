@@ -6,9 +6,34 @@ import { Button, Col, Row } from 'react-bootstrap';
 
 import Login from '../Loginpage/DoctorLogin.png';
 
-
+import { useRef, useState } from 'react';
+import { signup, login, logout, useAuth } from './firebase';
+import { Navigate } from 'react-router'
 
 function DoctorLogin() {
+
+    const currentUser = useAuth();
+
+    const [re, setRe] = useState(0);
+    const emailRef = useRef();
+    const passwordRef = useRef();
+
+    async function handleLogin() {
+        try {
+            await login(emailRef.current.value, passwordRef.current.value);
+            setRe(1);
+            alert("Logged in Successfully");
+
+        }
+        catch(e) {
+            alert("Error "+e)
+        }
+    }
+
+    if (re == 1)
+        return <Navigate to="/doctor-landing" />
+    else{
+
     return (
         <div className="App">
         <center>
@@ -25,6 +50,7 @@ function DoctorLogin() {
                 <Form.Control
                     id="floatingInputCustom"
                     type="email"
+                    ref={emailRef}
                     placeholder="name@example.com"
                 />
                 <label htmlFor="floatingInputCustom">Email address</label>
@@ -33,6 +59,7 @@ function DoctorLogin() {
                 <Form.Control
                     id="floatingPasswordCustom"
                     type="password"
+                    ref={passwordRef}
                     placeholder="Password"
                 />
                 <label htmlFor="floatingPasswordCustom">Password</label>
@@ -41,7 +68,7 @@ function DoctorLogin() {
 
                 <Row className="justify-content-md-center" >
                     
-                    <Button variant="primary" type="submit" style={{width:"8em",marginBottom:10}}>
+                    <Button variant="primary" type="submit" style={{width:"8em",marginBottom:10}} onClick={handleLogin}>
                     Login
                     </Button>
                     
@@ -58,5 +85,5 @@ function DoctorLogin() {
     </div>  
     )
 }
-
+}
 export default DoctorLogin
