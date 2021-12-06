@@ -11,11 +11,11 @@ function Appbar() {
 
         <Navbar  expand="lg" variant="dark" bg="dark">
             <Container>
-            <Navbar.Brand href="#home"><img src={ logo } style = {{width:"20%",float:"left"}}></img></Navbar.Brand>
+            <Navbar.Brand href="/"><img src={ logo } style = {{width:"20%",float:"left"}}></img></Navbar.Brand>
             <Nav className="me-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#features">Features</Nav.Link>
-            <Nav.Link href="#pricing">Pricing</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/features">Features</Nav.Link>
+            <Nav.Link href="/pricing">Pricing</Nav.Link>
             </Nav>
             </Container>
         </Navbar>

@@ -23,7 +23,6 @@ function DoctorLogin() {
             await login(emailRef.current.value, passwordRef.current.value);
             setRe(1);
             alert("Logged in Successfully");
-
         }
         catch(e) {
             alert("Error "+e)

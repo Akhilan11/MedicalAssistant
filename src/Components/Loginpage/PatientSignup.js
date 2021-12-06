@@ -19,7 +19,9 @@ function PatientSignup() {
 
     async function handleSignup() {
         try {
-            await signup(emailRef.current.value, passwordRef.current.value);
+            await signup(emailRef.current.value, passwordRef.current.value).then(res => {
+                console.log("Auth success")
+            }).catch(e => console.log(e))
             alert("Signed up successfully")
         }
         catch {
