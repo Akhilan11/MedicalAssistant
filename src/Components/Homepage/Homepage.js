@@ -98,7 +98,7 @@ function Homepage() {
                         <Card style={{ width: '30rem' }}>
                             <Card.Img variant="top" src={PatientDp} style={{ height: 500 }} />
                             <Card.Body>
-                                <Card.Title>Patients</Card.Title>
+                                <Card.Title>PATIENT</Card.Title>
                                 <hr />
                                 <Card.Text style={{fontSize:25,fontFamily: "Barlow Semi Condensed,sans-serif"}}>
                                     Patients can login their <br /> Account Here

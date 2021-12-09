@@ -1,0 +1,17 @@
+#button1{
+    
+   
+    display: inline-block;
+    vertical-align: top;
+    }
+    #button2{
+       
+        background-color: #d45a3b;
+        display: inline-block;
+        vertical-align: top;
+    }
+    
+#butn{
+        margin: 0 auto;
+        display: inline-block;
+}

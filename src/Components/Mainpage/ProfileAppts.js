@@ -2,7 +2,7 @@ import { getApps } from '@firebase/app';
 import React, { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { db,app,auth, useAuth } from '../Loginpage/firebase';
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs,query, where,getDoc} from "firebase/firestore";
 import firebase from '@firebase/app';
 require('firebase/auth');
 
@@ -10,15 +10,53 @@ console.log(auth);
 function ProfileAppts () {
     const location = useLocation();
     const [userbookings, setuserbookings] = useState([]);
-    const user=auth.currentUser;
-    useEffect(() => {
-        getDocs(collection(db,"Appointments")).where('user','=',user.uid).then((snapshot) => snapshot.forEach(ele => {
-            const data = ele.data();
-            setuserbookings(arr => [...arr, { data: data }]);
-            // console.log(data);
-        }))
-    }, [])
-    //console.log(userbookings);
+    // useEffect(() => {
+    //     getDocs(collection(db,"Appointments")).then((snapshot) => snapshot.forEach(ele => {
+    //         const data = ele.data();
+    //         setuserbookings(arr => [...arr, { data: data }]);
+    //          console.log(data);
+    //     }))
+    // }, [])
+   // console.log(userbookings);
+
+   const user=auth.currentUser;
+  // const q = query(collection(db, "Appointments"),where("user","==", user.uid));
+  const [hospitalsDetails, setHospitalsDetails] = useState([]);
+   useEffect(() => { 
+    const hospitals=[]
+    const getDocuments = async () => {
+    // e.preventDefault();
+    const q = query(collection(db, "Appointments"),where("user","==", user.uid));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((hospital) => {
+        // doc.data() is never undefined for query doc snapshots
+      //  console.log(doc.id, " => ", doc.data());
+        let appObj = { ...hospital.data()}
+        hospitals.push(appObj)
+       // hospitals.push(hospital)
+},)
+    setHospitalsDetails(hospitals);
+    }
+    getDocuments();
+  }, [])
+
+
+    // const [hospitalsDetails, setHospitalsDetails] = useState([]);
+    // useEffect(()=>{
+    //     //load hospitals into hospitalsList
+       
+    //     getDocs(collection(db,"Appointments"))
+    //         .then(snapshot => {
+    //             snapshot.docs.forEach(hospital => {
+    //                 let currentID = auth.currentUser;
+    //                 console.log(currentID.uid);
+    //                 let appObj = { ...hospital.data(),['user']:currentID.uid}
+    //                 hospitals.push(appObj)
+    //                // hospitals.push(hospital)
+    //         })
+    //         setHospitalsDetails(hospitals)
+    //     })
+    // },[])
     return (
         
             <div className="main-panel">
@@ -33,7 +71,6 @@ function ProfileAppts () {
                             <span class="navbar-toggler-icon icon-bar"></span>
                             <span class="navbar-toggler-icon icon-bar"></span>
                         </button>
-
                     </div>
                 </nav>
                 <div className="content">
@@ -85,9 +122,9 @@ function ProfileAppts () {
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                        userbookings.map((data, index) => {
-                                                            return <tr key={index}>   
-                                                                <td>
+                                                        hospitalsDetails.map((data, index) => {
+                                                            return <tr key={index}>
+                                                                 {/* <td>
                                                                     {data.data.name}
                                                                 </td>
                                                                 <td>
@@ -119,6 +156,39 @@ function ProfileAppts () {
                                                                 </td>
                                                                 <td>
                                                                     {data.data.preftime}
+                                                                </td>    */}
+                                                                <td>
+                                                                    {data.name}
+                                                                </td>
+                                                                <td>
+                                                                    {data.email}
+                                                                </td>
+                                                                <td>
+                                                                    {data.dob}
+                                                                </td>
+                                                                <td>
+                                                                    {data.bldgrp}
+                                                                </td>
+                                                                <td>
+                                                                    {data.age}
+                                                                </td>
+                                                                <td>
+                                                                    {data.phoneno}
+                                                                </td>
+                                                                <td>
+                                                                    {data.address}
+                                                                </td>
+                                                                <td>
+                                                                    {data.medcond}
+                                                                </td>
+                                                                <td>
+                                                                    {data.allergy}
+                                                                </td>
+                                                                <td>
+                                                                    {data.prefdate}
+                                                                </td>
+                                                                <td>
+                                                                    {data.preftime}
                                                                 </td>
                                                             </tr>
                                                         })

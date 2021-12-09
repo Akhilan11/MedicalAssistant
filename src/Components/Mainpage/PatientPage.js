@@ -5,86 +5,77 @@ import { Container } from 'react-bootstrap'
 import logo from '../Homepage/logo.png'
 import { collection, getDocs, setDoc, doc, addDoc } from "firebase/firestore";
 import { db, app, useAuth, auth } from '../Loginpage/firebase';
-
 import { Card } from "react-bootstrap";
 import { Col, Row } from "react-bootstrap";
-
 import img from './Login.png'
 import { Button } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
-
-
 import { Form } from 'react-bootstrap';
-
-
-
 function MyVerticallyCenteredModal(props) {
-  // const uid = useAuth();
-
-
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [dob, setdob] = useState("");
-  const [age, setAge] = useState("");
-  const [bldgrp, setBldgrp] = useState("");
-  const [phoneno, setPhoneno] = useState("");
-  const [address, setAddress] = useState("");
-  const [address2, setAddress2] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [zip, setZip] = useState("");
-  const [medcond, setMedcond] = useState("");
-  const [allergy, setAllergy] = useState("");
-  const [prefdate, setPrefdate] = useState("");
-  const [preftime, setPreftime] = useState("");
-  const user = auth.currentUser;
-  const handleSubmitAppt = (e) => {
+  const[name, setName] = useState("");
+  const[dob, setDob] = useState("");
+  const[bldgrp, setBldgrp] = useState("");
+  const[age, setAge] = useState("");
+  const[phoneno, setPhoneno] = useState("");
+  const[email, setEmail] = useState("");
+  const[address, setAddress] = useState("");
+  const[address2,setAddress2]=useState("");
+  const[city,setCity]=useState("");
+  const[state,setState]=useState("");
+  const[zip,setZip]=useState("");
+  const[medcond,setMedcond]=useState("");
+  const[allergy,setAllergy]=useState("");
+  const[prefdate,setPrefdate]=useState("");
+  const[preftime,setPreftime]=useState("");
+  const user=auth.currentUser;
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // const id = localStorage.getItem('id');
     console.log(props);
-
+    // signup(email, pwd).then(res => {
+    //     console.log("Auth success")
+        // console.log(res.user.uid);
+        setDoc(doc(db, "Appointment", user.uid), {
+            name: name,
+            dob:dob,
+            bldgrp:bldgrp,
+            age:age,
+            phoneno:phoneno,
+            address:address,
+            address2:address2,
+            city:city,
+            state:state,
+            zip:zip,
+            medcond:medcond,
+            allergy:allergy,
+            prefdate:prefdate,
+            preftime:preftime,
+            email: email,
+            user:user.uid,
+            doctor:props.id,
+        }).then(() => {
+                alert("Appointment submitted successfully");
+            })
+            .catch(error => {
+                alert(error.message);
+            });
+       setName("");
+       setEmail("");
+       setMedcond("");
+       setAllergy("");
+       setDob("");
+       setState("");
+       setZip("");
+       setPrefdate("");
+       setPreftime("");
+       setAge("");
+       setPhoneno("");
+       setAddress("");
+       setAddress2("");
+       setBldgrp("");
+       setCity("");
     // const coll = collection(db, "DoctorRequests") 
-    setDoc(doc(collection(db, "Appointments")), {
-      name: name,
-      medcond: medcond,
-      prefdate: prefdate,
-      preftime: preftime,
-      email: email,
-      bldgrp: bldgrp,
-      dob: dob,
-      age: age,
-      phoneno: phoneno,
-      zip: zip,
-      address: address,
-      address2: address2,
-      allergy: allergy,
-      state: state,
-      city: city,
-      user: user.uid,
-      doctor: props.id,
-
-    }).then(() => {
-      alert("Appointment submitted successfully");
-    }).catch(error => {
-      alert(error.message);
-    });
-
-    setName("");
-    setEmail("");
-    setAllergy("");
-    setMedcond("");
-    setAddress("");
-    setAddress2("");
-    setCity("");
-    setPhoneno("");
-    setZip("");
-    setdob("");
-    setState("");
-    setAge("");
-    setBldgrp("");
-    setPrefdate("");
-    setPreftime("");
-  };
+};
+  // const uid = useAuth();
   return (
     <Modal
       {...props}
@@ -98,13 +89,11 @@ function MyVerticallyCenteredModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-
-
         <Form>
           <Row className="mb-3">
             <Form.Group as={Col} controlId="formGridEmail">
               <Form.Label>Name</Form.Label>
-              <Form.Control type="email" placeholder="Enter Name" value={name}
+              <Form.Control type="name" placeholder="Enter Name" value={name}
                 onChange={(e) => setName(e.target.value)} />
             </Form.Group>
 
@@ -119,7 +108,7 @@ function MyVerticallyCenteredModal(props) {
             <Form.Group as={Col} controlId="formGridEmail">
               <Form.Label>D.O.B</Form.Label>
               <Form.Control type="text" placeholder="DD-MM-YYYY" value={dob}
-                onChange={(e) => setdob(e.target.value)} />
+                onChange={(e) => setDob(e.target.value)} />
             </Form.Group>
 
             <Form.Group as={Col} controlId="formGridPassword">
@@ -209,7 +198,7 @@ function MyVerticallyCenteredModal(props) {
           </Row>
 
           <center>
-            <Button variant="primary" type="submit" style={{ marginTop: "2em" }} onClick={handleSubmitAppt}>
+            <Button variant="primary" type="submit" style={{ marginTop: "2em" }} onClick={handleSubmit}>
               Book Appoinment
             </Button>
           </center>
@@ -279,7 +268,8 @@ function PatientPage() {
                       <br /><br /><br />
                       <p>Specialization : {dat.spl}</p>
                       <p>Years of Experience : {dat.years}</p>
-                      <p>{JSON.stringify(dat)}</p>
+                      
+                      {/* <p>{JSON.stringify(dat)}</p> */}
                     </Card.Text>
                   </div>
                 </Card.Body>

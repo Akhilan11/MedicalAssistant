@@ -8,6 +8,7 @@ import PatientPage from './Components/Mainpage/PatientPage';
 import DoctorPage from './Components/Mainpage/DoctorPage';
 
 import {BrowserRouter,Routes,Route} from "react-router-dom";
+import ProfileAppts from './Components/Mainpage/ProfileAppts';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="doctor-signup" element={<DoctorSignup />} />
           <Route path="patient-landing" element={<PatientPage />} />
           <Route path="doctor-landing" element={<DoctorPage />} />
+          <Route path="prof-app" element={<ProfileAppts />} />
           
           {/* <Route path="expenses" element={<Expenses />} />
         <Route path="invoices" element={<Invoices />} /> */}
