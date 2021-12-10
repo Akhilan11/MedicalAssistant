@@ -13,9 +13,136 @@ import { Col, Row } from "react-bootstrap";
 import img from './Login.png'
 import { Button } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
+
+function MyVerticallyCenteredModal(props) {
+  const[name, setName] = useState("");
+  const[age, setAge] = useState("");
+  const[date,setDate]=useState("");
+  const[strength,setStrength]=useState("");
+  const[med,setMed]=useState("");
+  const[medcond,setMedCond]=useState("");
+  const[dose,setDose]=useState("");
+  
+  const user=auth.currentUser;
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(props);
+    // signup(email, pwd).then(res => {
+    //     console.log("Auth success")
+        // console.log(res.user.uid);
+        setDoc(doc(db, "Prescription", user.uid), {
+            name: name,
+            age:age,
+            date:date,
+            med:med,
+            strength:strength,
+            dose:dose,
+            medcond:medcond,
+            user:user.uid,
+        }).then(() => {
+                alert("Prescription sent successfully");
+            })
+            .catch(error => {
+                alert(error.message);
+            });
+       setName("");
+       setDate("");
+       setAge("");
+       setMed("");
+       setMedCond("");
+       setStrength("");
+       setDose("");
+    // const coll = collection(db, "DoctorRequests") 
+};
+  // const uid = useAuth();
+  return (
+    <Modal
+      {...props}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+    >
+      <Modal.Header closeButton>
+        <Modal.Title id="contained-modal-title-vcenter">
+          Prescription
+        </Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <Form>
+          <Row className="mb-3">
+            <Form.Group as={Col} controlId="formGridName">
+              <Form.Label>Patient Name</Form.Label>
+              <Form.Control type="name" placeholder="Enter Name" value={name}
+                onChange={(e) => setName(e.target.value)} />
+            </Form.Group>
+
+            <Form.Group as={Col} controlId="formGridAge">
+              <Form.Label>Age</Form.Label>
+              <Form.Control type="number" placeholder="Enter Age" value={age}
+                onChange={(e) => setAge(e.target.value)} />
+            </Form.Group>
+
+            <Form.Group as={Col} controlId="formGridDate">
+              <Form.Label>Date</Form.Label>
+              <Form.Control type="text" placeholder="Enter Date" value={date}
+                onChange={(e) => setDate(e.target.value)} />
+            </Form.Group>
+          </Row>
+
+          <Form.Group className="mb-3" controlId="formGridMedicines">
+            <Form.Label>Medical Condition of Patient</Form.Label>
+            <Form.Control placeholder="Medical condition" value={medcond}
+              onChange={(e) => setMedCond(e.target.value)} />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formGridMedicines">
+            <Form.Label>Medication</Form.Label>
+            <Form.Control placeholder="Medicines" value={med}
+              onChange={(e) => setMed(e.target.value)} />
+          </Form.Group>
+
+          <Form.Group className="mb-3" controlId="formGridStrength">
+            <Form.Label>Strength</Form.Label>
+            <Form.Control placeholder="Strength" value={strength}
+              onChange={(e) => setStrength(e.target.value)} />
+          </Form.Group>
+
+          <Row className="mb-3">
+            <Form.Group as={Col} controlId="formGridDose">
+              <Form.Label>Dose</Form.Label>
+              <Form.Control placeholder="Dose in number" value={dose}
+                onChange={(e) => setDose(e.target.value)} />
+            </Form.Group>
+          </Row>
+
+          <hr style={{ marginTop: "2em" }} />
+
+          
+          <center>
+            <Button variant="primary" type="submit" style={{ marginTop: "2em" }} onClick={handleSubmit}>
+              Send
+            </Button>
+          </center>
+        </Form>
+
+
+
+      </Modal.Body>
+      <Modal.Footer>
+        <Button onClick={props.onHide}>Close</Button>
+      </Modal.Footer>
+    </Modal>
+
+  );
+}
+
+
 
 function DoctorPage(){
+  
   const [doctors, setDoctors] = useState(null);
+  const [modalShow, setModalShow] = React.useState(false);
   useEffect(() => {
     if (doctors == null)
       getDocs(collection(db, "Appointment")).then((querySnapshot) => {
@@ -34,6 +161,7 @@ function DoctorPage(){
 
 
   return(
+ 
     <div>
        <Navbar expand="lg" variant="dark" bg="dark">
         <Container>
@@ -54,7 +182,16 @@ function DoctorPage(){
 
 <center>
   <Card border="primary" style={{ width: '30rem' }}>
-    <Card.Header>Patient Name : {dat.name}</Card.Header>
+    <Card.Header>Patient Name : {dat.name}                                                                                         <Button variant="secondary btn-sm" onClick={() => {
+                   setModalShow(true)
+              }}>Prescription</Button>    
+              <MyVerticallyCenteredModal
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+              />
+   
+    
+    </Card.Header>
     <Card.Body>
       <Card.Title>Medical Condition : {dat.medcond}</Card.Title>
       <Card.Text>
