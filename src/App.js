@@ -9,12 +9,11 @@ import DoctorPage from './Components/Mainpage/DoctorPage';
 import DoctorPresp from './Components/Mainpage/DoctorPresp';
 import {BrowserRouter,Routes,Route} from "react-router-dom";
 import ProfileAppts from './Components/Mainpage/ProfileAppts';
-
+import Videochat from './Videochat';
 function App() {
   return (
     <div className="App">
       {/* <Homepage /> */}
-
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Homepage />} />
@@ -26,13 +25,34 @@ function App() {
           <Route path="doctor-landing" element={<DoctorPage />} />
           <Route path="prof-app" element={<ProfileAppts />} />
           <Route path="doct-presp" element={<DoctorPresp/>} />
+		  <Route path="video-chat" element={<Videochat/>} />
           {/* <Route path="expenses" element={<Expenses />} />
         <Route path="invoices" element={<Invoices />} /> */}
         </Routes>
       </BrowserRouter>
-
     </div>
   );
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

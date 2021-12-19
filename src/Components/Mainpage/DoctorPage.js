@@ -133,11 +133,8 @@ function MyVerticallyCenteredModal(props) {
         <Button onClick={props.onHide}>Close</Button>
       </Modal.Footer>
     </Modal>
-
   );
 }
-
-
 
 function DoctorPage(){
   
@@ -168,7 +165,6 @@ function DoctorPage(){
           <Navbar.Brand href="#home"><img src={logo} style={{ width: "20%", float: "left" }}></img></Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href="prof-app">Upcoming Appointments</Nav.Link>
-
           </Nav>
         </Container>
       </Navbar>
@@ -202,13 +198,12 @@ function DoctorPage(){
       </Card.Text>
     </Card.Body>
     <div class="btn-group">
-<a href="#" class="btn btn-success">Available</a>
+<a href="video-chat" class="btn btn-success">Available</a>
 <a href="#" class="btn btn-danger">Not Available</a>
 </div>
   </Card>
   </center>
   <br />
-  
   </>
   )}
   </div>)
