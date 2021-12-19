@@ -34,7 +34,11 @@ export function signup(email, password) {
 }
 
 export function login(email, password) {
-    return signInWithEmailAndPassword(auth, email, password)
+    return signInWithEmailAndPassword(auth, email, password).then(val=>{
+        console.log(val.user.uid)
+        localStorage.setItem("uid",val.user.uid);
+        return val.user.uid;
+    })
 }
 
 
@@ -42,12 +46,17 @@ export function logout() {
     return signOut(auth);
 }
 
-export function useAuth(){
+export function getUser(){
+    return auth.currentUser
+}
+
+export function useAuth() {
     const [currentUser, setCurrentUser] = useState();
-useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setCurrentUser(user);
-     // setLoading(false);
-    });
-    return unsubscribe;
-  }, [currentUser]);}
+    useEffect(() => {
+        const unsubscribe = auth.onAuthStateChanged((user) => {
+            setCurrentUser(user);
+            // setLoading(false);
+        });
+        return unsubscribe;
+    }, [currentUser]);
+}
