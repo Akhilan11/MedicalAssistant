@@ -9,7 +9,7 @@ import DoctorPage from './Components/Mainpage/DoctorPage';
 import DoctorPresp from './Components/Mainpage/DoctorPresp';
 import {BrowserRouter,Routes,Route} from "react-router-dom";
 import ProfileAppts from './Components/Mainpage/ProfileAppts';
-import Videochat from './Videochat';
+import Videochat from './Components/Mainpage/Videochat';
 function App() {
   return (
     <div className="App">

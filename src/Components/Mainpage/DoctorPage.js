@@ -4,7 +4,7 @@ import { Navbar } from 'react-bootstrap'
 import { Nav } from 'react-bootstrap'
 import { Container } from 'react-bootstrap'
 import logo from '../Homepage/logo.png'
-import { collection, getDocs, setDoc, doc, addDoc } from "firebase/firestore";
+import { collection, getDocs, setDoc, query, where, doc, addDoc } from "firebase/firestore";
 import { db, app, useAuth, auth } from '../Loginpage/firebase';
 import './Style.css';
 import { Card } from "react-bootstrap";
@@ -137,25 +137,30 @@ function MyVerticallyCenteredModal(props) {
 }
 
 function DoctorPage(){
-  
-  const [doctors, setDoctors] = useState(null);
   const [modalShow, setModalShow] = React.useState(false);
-  useEffect(() => {
-    if (doctors == null)
-      getDocs(collection(db, "Appointment")).then((querySnapshot) => {
-        // console.log(querySnapshot)
-        var docs = []
-        querySnapshot.forEach((doc) => {
-          // doc.data() is never undefined for query doc snapshots
-          // console.log(doc.id, " => ", doc.data());
-          // setDoctors([doc.data()]);
-          docs.push(doc.data())
-        });
-        // console.log(docs);
-        setDoctors(docs);
-      }).catch(e => alert(e));
-  }, [])
+ 
 
+  const uid = localStorage.getItem("uid")
+  const [hospitalsDetails, setHospitalsDetails] = useState([]);
+   const q = query(collection(db, "Appointment"), where("doctor", "==", uid));
+  console.log(q);
+  useEffect(() => {
+       const hospitals = []
+      const getDocuments = async () => {
+          // e.preventDefault();
+          // const q = query(collection(db, "Appointment"));
+          const querySnapshot = await getDocs(q);
+          querySnapshot.forEach((hospital) => {
+              // doc.data() is never undefined for query doc snapshots
+              //  console.log(doc.id, " => ", doc.data());
+              let appObj = { ...hospital.data() }
+              hospitals.push(appObj)
+              // hospitals.push(hospital)
+          })
+          setHospitalsDetails(hospitals);
+      }
+      getDocuments();
+  }, [])
 
   return(
  
@@ -173,7 +178,7 @@ function DoctorPage(){
       <h2>Patient Requests</h2>
       <br></br>
       <br/>
-    {doctors && doctors.map(dat =>
+    {hospitalsDetails && hospitalsDetails.map(dat =>
 <>
 
 <center>
@@ -185,8 +190,6 @@ function DoctorPage(){
                 show={modalShow}
                 onHide={() => setModalShow(false)}
               />
-   
-    
     </Card.Header>
     <Card.Body>
       <Card.Title>Medical Condition : {dat.medcond}</Card.Title>

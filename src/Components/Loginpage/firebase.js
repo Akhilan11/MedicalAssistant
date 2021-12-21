@@ -5,9 +5,6 @@ import { useState, useEffect } from "react";
 import firebase from "firebase/compat/app";
 import "firebase/auth";
 import "firebase/firestore";
-
-import "firebase/firestore";
-import "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
 
