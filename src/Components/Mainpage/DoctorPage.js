@@ -141,9 +141,6 @@ function MyVerticallyCenteredModal(props) {
             </Button>
           </center>
         </Form>
-
-
-
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.onHide}>Close</Button>
@@ -154,11 +151,9 @@ function MyVerticallyCenteredModal(props) {
 
 function DoctorPage(){
   const [modalShow, setModalShow] = React.useState(false);
- 
-
   const uid = localStorage.getItem("uid")
   const [hospitalsDetails, setHospitalsDetails] = useState([]);
-   const q = query(collection(db, "Appointment"), where("doctor", "==", uid));
+  const q = query(collection(db, "Appointment"), where("doctor", "==", uid));
   console.log(q);
   useEffect(() => {
        const hospitals = []
@@ -178,7 +173,6 @@ function DoctorPage(){
       getDocuments();
   }, []);
   return(
- 
     <div>
        <Navbar expand="lg" variant="dark" bg="dark">
         <Container>
@@ -205,9 +199,7 @@ function DoctorPage(){
             });
           }
       return(
-      
         <div key={dat.user+dat.doctor}>
-
         <center>
           <Card border="primary" style={{ width: '30rem' }}>
             <Card.Header>Patient Name : {dat.name}                                                                                         

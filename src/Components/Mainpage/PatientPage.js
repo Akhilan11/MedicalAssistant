@@ -244,6 +244,7 @@ function PatientPage() {
         <Container>
           <Navbar.Brand href="#home"><img src={logo} style={{ width: "20%", float: "left" }}></img></Navbar.Brand>
           <Nav className="me-auto">
+            <Nav.Link href="video-chat">Video Appointment</Nav.Link>
             <Nav.Link href="prof-app">Appointments</Nav.Link>
             <Nav.Link href="doct-presp">Doctor Prescription</Nav.Link>
           </Nav>
