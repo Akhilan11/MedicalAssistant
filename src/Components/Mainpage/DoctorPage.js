@@ -9,12 +9,27 @@ import { db, app, useAuth, auth } from '../Loginpage/firebase';
 import './Style.css';
 import { Card } from "react-bootstrap";
 import { Col, Row } from "react-bootstrap";
-
 import img from './Login.png'
 import { Button } from 'react-bootstrap';
 import { Modal } from 'react-bootstrap';
 import { Form } from 'react-bootstrap';
-
+import  firebase from 'firebase/compat/app';
+import 'firebase/compat/auth';
+import 'firebase/compat/firestore';
+let firebaseConfig = {
+    apiKey: "AIzaSyB3012ISAqlxzaswq-f8MbJWUSLgJlT-lg",
+    authDomain: "auth-tutorial-5586f.firebaseapp.com",
+    databaseURL: "https://auth-tutorial-5586f-default-rtdb.firebaseio.com",
+    projectId: "auth-tutorial-5586f",
+    storageBucket: "auth-tutorial-5586f.appspot.com",
+    messagingSenderId: "283970077426",
+    appId: "1:283970077426:web:28f11c0bcd1d7378ca066b",
+    measurementId: "G-HGKPM7LXQX"
+};
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+const db1 = firebase.firestore();
 function MyVerticallyCenteredModal(props) {
   const[name, setName] = useState("");
   const[age, setAge] = useState("");
@@ -24,7 +39,6 @@ function MyVerticallyCenteredModal(props) {
   const[medcond,setMedCond]=useState("");
   const[dose,setDose]=useState("");
   // console.log(props.patient)
-  
   const user=auth.currentUser;
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -32,7 +46,7 @@ function MyVerticallyCenteredModal(props) {
     // signup(email, pwd).then(res => {
     //     console.log("Auth success")
         // console.log(res.user.uid);
-        setDoc(doc(db, "Prescription", user.uid), {
+        setDoc(doc(db, "Prescription", user.uid+" "+props.id), {
             name: name,
             age:age,
             date:date,
@@ -162,17 +176,16 @@ function DoctorPage(){
           setHospitalsDetails(hospitals);
       }
       getDocuments();
-  }, [])
-
+  }, []);
   return(
  
     <div>
        <Navbar expand="lg" variant="dark" bg="dark">
         <Container>
           <Navbar.Brand href="#home"><img src={logo} style={{ width: "20%", float: "left" }}></img></Navbar.Brand>
-          <Nav className="me-auto">
+          {/* <Nav className="me-auto">
             <Nav.Link href="prof-app">Upcoming Appointments</Nav.Link>
-          </Nav>
+          </Nav> */}
         </Container>
       </Navbar>
       <br>
@@ -183,6 +196,14 @@ function DoctorPage(){
     {hospitalsDetails && hospitalsDetails.map(dat =>
     {
       console.log(dat.user)
+      const handleDelete = (e) => {
+            var deletePatient = db1.collection('Appointment').where('user','==',dat.user);
+            deletePatient.get().then(function(querySnapshot) {
+              querySnapshot.forEach(function(doc) {
+                doc.ref.delete();
+              });
+            });
+          }
       return(
       
         <div key={dat.user+dat.doctor}>
@@ -210,7 +231,7 @@ function DoctorPage(){
             </Card.Body>
             <div class="btn-group">
         <a href="video-chat" class="btn btn-success">Available</a>
-        <a href="#" class="btn btn-danger">Not Available</a>
+        <a href="#" class="btn btn-danger" onClick={handleDelete}>Not Available</a>
         </div>
           </Card>
           </center>

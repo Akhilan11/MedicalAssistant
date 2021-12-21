@@ -20,9 +20,10 @@ function DoctorPresp() {
    const [hospitalDetails, setHospitalDetails] = useState([]);
    useEffect(() => { 
     const hospitals1=[]
+    const uid = localStorage.getItem("uid")
     const getDocuments = async () => {
     // e.preventDefault();
-    const q = query(collection(db, "Prescription"));
+    const q = query(collection(db, "Prescription"),where("patient","==", uid));
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((hospital) => {
         // doc.data() is never undefined for query doc snapshots
