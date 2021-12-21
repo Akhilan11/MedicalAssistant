@@ -8,17 +8,6 @@ import { getAuth } from '@firebase/auth';
 // require('firebase/auth');
 function ProfileAppts() {
     const uid = localStorage.getItem("uid")
-    
-    const location = useLocation();
-    const [userbookings, setuserbookings] = useState([]);
-    // useEffect(() => {
-    //     getDocs(collection(db,"Appointments")).then((snapshot) => snapshot.forEach(ele => {
-    //         const data = ele.data();
-    //         setuserbookings(arr => [...arr, { data: data }]);
-    //          console.log(data);
-    //     }))
-    // }, [])
-    // console.log(userbookings);
     const q = query(collection(db, "Appointment"), where("user", "==", uid));
     console.log(q);
     const [hospitalsDetails, setHospitalsDetails] = useState([]);
@@ -39,22 +28,6 @@ function ProfileAppts() {
         }
         getDocuments();
     }, [])
-    // const [hospitalsDetails, setHospitalsDetails] = useState([]);
-    // useEffect(()=>{
-    //     //load hospitals into hospitalsList
-
-    //     getDocs(collection(db,"Appointments"))
-    //         .then(snapshot => {
-    //             snapshot.docs.forEach(hospital => {
-    //                 let currentID = auth.currentUser;
-    //                 console.log(currentID.uid);
-    //                 let appObj = { ...hospital.data(),['user']:currentID.uid}
-    //                 hospitals.push(appObj)
-    //                // hospitals.push(hospital)
-    //         })
-    //         setHospitalsDetails(hospitals)
-    //     })
-    // },[])
     return (
         <div className="main-panel">
             <nav class="navbar navbar-expand-lg navbar-transparent navbar-absolute fixed-top ">

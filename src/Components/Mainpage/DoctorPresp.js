@@ -65,6 +65,9 @@ function DoctorPresp() {
                                             <table className="table">
                                                 <thead className=" text-primary">
                                                     <th>
+                                                        DoctorName
+                                                    </th>
+                                                    <th>
                                                         Date
                                                     </th>
                                                     <th>
@@ -119,7 +122,13 @@ function DoctorPresp() {
                                                                     {data.data.preftime}
                                                                 </td>    */}
                                                                 <td>
+                                                                    {data.doctorName}
+                                                                </td>
+                                                                <td>
                                                                     {data.date}
+                                                                </td>
+                                                                <td>
+                                                                    {data.medcond}
                                                                 </td>
                                                                 <td>
                                                                     {data.med}

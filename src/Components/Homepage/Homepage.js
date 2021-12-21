@@ -62,7 +62,7 @@ function Homepage() {
                     <img src = {Img3} style={{width:"70%"}}/>
                     <Carousel.Caption>
                     <h5 style={{backgroundColor:"white"}}>Result</h5>
-                    <p style={{backgroundColor:"white"}}>We deliever it</p>
+                    <p style={{backgroundColor:"white"}}>We deliver it</p>
                     </Carousel.Caption>
                 </Carousel.Item>
                 </Carousel>
