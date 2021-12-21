@@ -34,7 +34,7 @@ function MyVerticallyCenteredModal(props) {
     // signup(email, pwd).then(res => {
     //     console.log("Auth success")
         // console.log(res.user.uid);
-        setDoc(doc(db, "Appointment", user.uid), {
+        setDoc(doc(db, "Appointment", user.uid+" "+props.id), {
             name: name,
             dob:dob,
             bldgrp:bldgrp,

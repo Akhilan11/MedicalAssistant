@@ -23,6 +23,7 @@ function MyVerticallyCenteredModal(props) {
   const[med,setMed]=useState("");
   const[medcond,setMedCond]=useState("");
   const[dose,setDose]=useState("");
+  // console.log(props.patient)
   
   const user=auth.currentUser;
   const handleSubmit = (e) => {
@@ -40,6 +41,7 @@ function MyVerticallyCenteredModal(props) {
             dose:dose,
             medcond:medcond,
             user:user.uid,
+            patient:props.patient
         }).then(() => {
                 alert("Prescription sent successfully");
             })
@@ -179,171 +181,43 @@ function DoctorPage(){
       <br></br>
       <br/>
     {hospitalsDetails && hospitalsDetails.map(dat =>
-<>
+    {
+      console.log(dat.user)
+      return(
+      
+        <div key={dat.user+dat.doctor}>
 
-<center>
-  <Card border="primary" style={{ width: '30rem' }}>
-    <Card.Header>Patient Name : {dat.name}                                                                                         <Button variant="secondary btn-sm" onClick={() => {
-                   setModalShow(true)
-              }}>Prescription</Button>    
-              <MyVerticallyCenteredModal
-                show={modalShow}
-                onHide={() => setModalShow(false)}
-              />
-    </Card.Header>
-    <Card.Body>
-      <Card.Title>Medical Condition : {dat.medcond}</Card.Title>
-      <Card.Text>
-        <h5>Preferred Date : {dat.prefdate}</h5>
-        <h5>Preferred Time : {dat.preftime}</h5>
-        {/* Some quick example text to build on the card title and make up the bulk
-        of the card's content. */}
-      </Card.Text>
-    </Card.Body>
-    <div class="btn-group">
-<a href="video-chat" class="btn btn-success">Available</a>
-<a href="#" class="btn btn-danger">Not Available</a>
-</div>
-  </Card>
-  </center>
-  <br />
-  </>
+        <center>
+          <Card border="primary" style={{ width: '30rem' }}>
+            <Card.Header>Patient Name : {dat.name}                                                                                         
+            <Button variant="secondary btn-sm" onClick={() => {
+                          setModalShow(true)
+                      }}>Prescription</Button>    
+                      <MyVerticallyCenteredModal
+                        show={modalShow}
+                        patient={dat.user}
+                        onHide={() => setModalShow(false)}
+                      />
+            </Card.Header>
+            <Card.Body>
+              <Card.Title>Medical Condition : {dat.medcond}</Card.Title>
+              <Card.Text>
+                <h5>Preferred Date : {dat.prefdate}</h5>
+                <h5>Preferred Time : {dat.preftime}</h5>
+                {/* Some quick example text to build on the card title and make up the bulk
+                of the card's content. */}
+              </Card.Text>
+            </Card.Body>
+            <div class="btn-group">
+        <a href="video-chat" class="btn btn-success">Available</a>
+        <a href="#" class="btn btn-danger">Not Available</a>
+        </div>
+          </Card>
+          </center>
+          <br />
+          </div>
+      )}
   )}
   </div>)
 }
 export default DoctorPage;
-// function MyVerticallyCenteredModal(props) {
-//   const [doctor, setDoctor] = useState(null);
-//   useEffect(() => {
-//     if (doctor == null)
-//       getDocs(collection(db, "Appointment")).then((querySnapshot) => {
-//         // console.log(querySnapshot)
-//         var docs = []
-//         querySnapshot.forEach((doc) => {
-//           // doc.data() is never undefined for query doc snapshots
-//           // console.log(doc.id, " => ", doc.data());
-//           // setDoctors([doc.data()]);
-//           docs.push(doc.data())
-//         });
-//         // console.log(docs);
-//         setDoctor(docs);
-//       }).catch(e => alert(e));
-//   }, [])
-// return (
-//   <div >
-//   {doctor && doctor.map(dat =>
-   
- 
-//   <Modal
-//     {...props}
-//     size="lg"
-//     aria-labelledby="contained-modal-title-vcenter"
-//     centered
-//   >
-    
-//     <Modal.Header closeButton>
-//       <Modal.Title id="contained-modal-title-vcenter">
-//        Patient Details
-//       </Modal.Title>
-//     </Modal.Header>
-//     <Modal.Body>
-//       <h4>Patient Name : {dat.name}</h4>
-//       <h4>Medical Condition : {dat.medcond}</h4>
-//       <h5>Preferred Date of Appointment :{dat.prefdate}</h5>
-//       <h5>Preferred Time of Appointment :{dat.preftime}</h5>
-//     <div class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
-//   <div class="modal-dialog" role="document">
-//     <div class="modal-content">
-//       <div class="modal-header">
-//         <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-//         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-//           <span aria-hidden="true">&times;</span>
-//         </button>
-//       </div>
-//       <div class="modal-body">
-//         ...
-//       </div>
-//       <div class="modal-footer">
-//         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-//         <button type="button" class="btn btn-primary">Save changes</button>
-//       </div>
-//     </div>
-//   </div>
-// </div>
-
-    
-    
-//     </Modal.Body>
-//     <Modal.Footer>
-//       <Button onClick={props.onHide}>Close</Button>
-//     </Modal.Footer>
-   
-//   </Modal>
-//   )}
-
-//   </div>
-  
-// )
-// }
-
-// function DoctorPage() {
-//   const [modalShow, setModalShow] = React.useState(false);
-//   const [doctors, setDoctors] = useState(null);
-//   useEffect(() => {
-    
-//     if (doctors == null)
-//       getDocs(collection(db, "Appointment")).then((querySnapshot) => {
-//         // console.log(querySnapshot)
-//         var docs = []
-//         querySnapshot.forEach((doc) => {
-//           // doc.data() is never undefined for query doc snapshots
-//           // console.log(doc.id, " => ", doc.data());
-//           // setDoctors([doc.data()]);
-//           docs.push(doc.data())
-//         });
-//         // console.log(docs);
-//         setDoctors(docs);
-//       }).catch(e => alert(e));
-//   }, [])
-//   return (
-//     <div>
-//     {doctors && doctors.map(dat =>
-//       <center>
-// <div className="row">
-// {
-//     /* moviedata.map((data, index) => { */
-//         //console.log(data.image);
-//         <div className="col-4"  style={{ marginLeft: "auto", marginRight: "auto" }}>
-//             <div className="card">
-//                 <div className="card-img-top img-fluid">
-//                     <img src={img} style={{ width: '18rem', height: '20rem' }} />
-//                 </div>
-//                 <h1>Name :{dat.name}</h1>
-//                 <Button variant="primary" onClick={() => {
-//                   setModalShow(true)
-//                 }}>View Details</Button>
-//               <hr/>
-//               <MyVerticallyCenteredModal
-//                 show={modalShow}
-                
-//                 onHide={() => setModalShow(false)}
-//               />
-              
-              
-//            <div>
-
-
-// 	<Button class="btn btn-primary" id="button1">Available</Button>
-// 	<Button class="btn btn-primary ml-4" id="button2">Not available</Button>
-// </div>
-           
-//         </div>
-           
-//         </div>
-// })
-// </div>
-// </center>
-//     )}
-//     </div>
-//   )}
-
