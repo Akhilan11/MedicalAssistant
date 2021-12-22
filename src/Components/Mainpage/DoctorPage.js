@@ -31,9 +31,10 @@ if (!firebase.apps.length) {
   }
 const db1 = firebase.firestore();
 function MyVerticallyCenteredModal(props) {
-  const[name, setName] = useState("");
+  const[patientName, setPatientName] = useState("");
   const[age, setAge] = useState("");
   const[date,setDate]=useState("");
+  const[doctorName,setDoctorName]=useState("");
   const[strength,setStrength]=useState("");
   const[med,setMed]=useState("");
   const[medcond,setMedCond]=useState("");
@@ -47,7 +48,7 @@ function MyVerticallyCenteredModal(props) {
     //     console.log("Auth success")
         // console.log(res.user.uid);
         setDoc(doc(db, "Prescription", user.uid+" "+props.id), {
-            name: name,
+            name: patientName,
             age:age,
             date:date,
             med:med,
@@ -55,6 +56,7 @@ function MyVerticallyCenteredModal(props) {
             dose:dose,
             medcond:medcond,
             user:user.uid,
+            doctorName:doctorName,
             patient:props.patient
         }).then(() => {
                 alert("Prescription sent successfully");
@@ -62,13 +64,14 @@ function MyVerticallyCenteredModal(props) {
             .catch(error => {
                 alert(error.message);
             });
-       setName("");
+       setPatientName("");
        setDate("");
        setAge("");
        setMed("");
        setMedCond("");
        setStrength("");
        setDose("");
+       setDoctorName("");
     // const coll = collection(db, "DoctorRequests") 
 };
   // const uid = useAuth();
@@ -87,10 +90,16 @@ function MyVerticallyCenteredModal(props) {
       <Modal.Body>
         <Form>
           <Row className="mb-3">
+          <Form.Group as={Col} controlId="formGridName">
+              <Form.Label>Doctor Name</Form.Label>
+              <Form.Control type="name" placeholder="Enter Name" value={doctorName}
+                onChange={(e) => setDoctorName(e.target.value)} />
+            </Form.Group>
+
             <Form.Group as={Col} controlId="formGridName">
               <Form.Label>Patient Name</Form.Label>
-              <Form.Control type="name" placeholder="Enter Name" value={name}
-                onChange={(e) => setName(e.target.value)} />
+              <Form.Control type="name" placeholder="Enter Name" value={patientName}
+                onChange={(e) => setPatientName(e.target.value)} />
             </Form.Group>
 
             <Form.Group as={Col} controlId="formGridAge">
